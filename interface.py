@@ -62,6 +62,7 @@ class StartPage(tk.Frame):
         button3 = ttk.Button(self, text="Today",
                              command=lambda: controller.show_frame(Today))
         button3.pack()
+        #TODO Fix the bug with displaying Matplotlib graph on main page 
 """
         # Connection to Database and querying data from connected db
         con = lite.connect('incomes.db')
