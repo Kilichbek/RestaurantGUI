@@ -1,3 +1,22 @@
+""""
+File: interface.py
+Authors:
+        Name                        Student ID        Major                                     Role
+        Kilichbek Haydarov          16012676        Computer Science & Engineering              Project Manager
+        Ulugbek Yusupov             Unknown         Computer Science & Engineering              Senior Developer
+        Farrukh Yokubjanov          Unknown         Computer Science & Engineering              Junior Developer
+        Bakhriddin                  Unknown         Business Administration                     Intern
+        Gulchiroy                   Unknown         Computer Science & Engineering              Intern
+
+Description: A program to help restaurant employees to manage and keep
+            track of tables and orders from that tables, and calculate total
+            prices. This program also provides the bar chart of daily income
+            in a particular week
+
+Version: 1.0.0
+
+"""
+
 import tkinter as tk
 import tkinter.messagebox as tm
 from tkinter import ttk
@@ -62,7 +81,7 @@ class StartPage(tk.Frame):
         button3 = ttk.Button(self, text="Today",
                              command=lambda: controller.show_frame(Today))
         button3.pack()
-        #TODO Fix the bug with displaying Matplotlib graph on main page 
+        #TODO Fix the bug with displaying Matplotlib graph on main page
 """
         # Connection to Database and querying data from connected db
         con = lite.connect('incomes.db')
@@ -265,8 +284,8 @@ class PageThree(tk.Frame):
 
         Frame1 = tk.Frame(self, bg="red")
         Frame1.grid(row=0, column=0, rowspan=3, columnspan=2, sticky="WENS")
-        Frame3 = tk.Frame(self, bg="green")
-        Frame3.grid(row=0, column=2, rowspan=6, columnspan=3, sticky="WENS")
+        Frame2 = tk.Frame(self, bg="green")
+        Frame2.grid(row=0, column=2, rowspan=6, columnspan=3, sticky="WENS")
 
         self.listbox = tk.Listbox(Frame1)
         self.listbox.insert(1, "Table 1")
@@ -278,6 +297,7 @@ class PageThree(tk.Frame):
         self.listbox.grid(row=1, column=0, rowspan=4, columnspan=3, sticky="WENS")
         self.listbox.focus()
         self.listbox.bind('<Double-1>', lambda event, frame=Frame1: self.menuPopUpWindow(event, frame))
+        self.listbox.bind('<<ListboxSelect>>', lambda event,frame=Frame2:self.onselect(event,frame))
 
         menu_button = ttk.Button(Frame1,text="Close Table",command = lambda: self.closeTable())
         menu_button.grid(row=5,column = 0,columnspan = 3,sticky="WENS")
@@ -285,6 +305,28 @@ class PageThree(tk.Frame):
     def closeTable(self):
         table = self.selection_get() #TODO Adding total price and date to database
         open("Files/"+table+".txt", 'w').close()
+        self.treeview.delete(*self.treeview.get_children())
+
+    def onselect(self,event,frame):
+        self.treeview = ttk.Treeview(frame)
+        self.treeview.grid(row=0, column=2, rowspan=6, columnspan=3, sticky="WENS")
+        self.treeview.config(columns=('name', 'price','amount','total'))
+        self.treeview.heading('#0', text='#')
+        self.treeview.heading('name', text='Name')
+        self.treeview.heading('price', text='Price')
+        self.treeview.heading('amount', text='Amount')
+        self.treeview.heading('total', text='Total')
+        self.treeview.delete(*self.treeview.get_children())
+        table = self.listbox.selection_get()
+        total_price = 0.0
+        file = open("Files/" + table + ".txt", "r")
+        for line in file:
+            food,price,amount,total = line.split("\t")
+            self.treeview.insert('','end',text="1",values=(food,price,amount,total))
+            total_price += float(total[1:])
+        self.treeview.insert('','end',text="------",values=("-------","------","------",total_price))
+
+        file.close()
 
     def menuPopUpWindow(self,event,frame):
         win = tk.Toplevel()
@@ -343,7 +385,7 @@ class PageThree(tk.Frame):
         l1.grid(row=1, column=0)
 
         file = open("Files/"+table+".txt","a")
-        file.write(food + " $"+str(price)+" $"+str(price*4)+"\n")
+        file.write(food + "\t$"+str(price)+"\t"+str(4)+"\t$"+str(price*4)+"\n")
 
         file.close()
 
