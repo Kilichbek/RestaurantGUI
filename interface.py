@@ -336,47 +336,38 @@ class PageThree(tk.Frame):
         l = tk.Label(win,text=tabel_no)
         l.grid(row=4,column=0)
 
-
-
         notebook = ttk.Notebook(win)
-        f1 = ttk.Frame(notebook)
-        f2 = ttk.Frame(notebook)
-        f3 = ttk.Frame(notebook)
-        f4 = ttk.Frame(notebook)
-        f5 = ttk.Frame(notebook)
-        f6 = ttk.Frame(notebook)
-        notebook.add(f1, text='Starter')
-        notebook.add(f2, text='Main Menu')
-        notebook.add(f3, text='Salad')
-        notebook.add(f4, text='Pizza')
-        notebook.add(f5, text='Desert')
-        notebook.add(f6, text='Drink')
+        notebook_frames = []
+        food_category_list = ['Starter', 'Main Menu', 'Salad', 'Pizza', 'Desert', 'Drink']
+        self.treeviews = []
+
+        for i in range(5):
+            notebook_frames.append(ttk.Frame(notebook))
+            notebook.add(notebook_frames[-1],text=food_category_list[i])
+            self.treeviews.append(ttk.Treeview(notebook_frames[-1]))
+            self.treeviews[-1].pack()
+            self.treeviews[-1].pack()
+            self.treeviews[-1].config(columns=('name', 'price'))
+            self.treeviews[-1].heading('#0', text='#')
+            self.treeviews[-1].heading('name', text='Name')
+            self.treeviews[-1].heading('price', text='Price')
+
+            self.treeviews[-1].insert('', 'end', text=i, values=("French Fries", "$3"))
+
+            self.treeviews[-1].bind('<Double-1>', lambda x: self.amountPopUpWindow(event, table=tabel_no,
+                                                                                              index=i))
+            notebook_frames[-1].rowconfigure(0, weight=1)
+            notebook_frames[-1].columnconfigure(0, weight=1)
+
         notebook.grid(row=0, column=0, rowspan=3, columnspan=2, sticky="WENS")
-
-        self.treeview = ttk.Treeview(f1)
-
-        self.treeview.pack()
-        self.treeview.config(columns=('name', 'price'))
-        self.treeview.heading('#0', text='#')
-        self.treeview.heading('name', text='Name')
-        self.treeview.heading('price', text='Price')
-
-        self.treeview.insert('', 'end', text="1", values=("French Fries", "$3"))
-        self.treeview.bind('<Double-1>',lambda x: self.amountPopUpWindow(event,table=tabel_no))
-
-        # set frame resize priorities
-        f1.rowconfigure(0, weight=1)
-        f1.columnconfigure(0, weight=1)
-
         b = ttk.Button(win, text="Okay", command=win.destroy)
         b.grid(row=5, column=0)
 
-    def amountPopUpWindow(self,event,table):
+    def amountPopUpWindow(self,event,table,index):
         win = tk.Toplevel()
         win.wm_title("Amount")
         win.geometry("200x200+30+30")
-        item = self.treeview.selection()[0]
-        values = self.treeview.item(item)['values']
+        values = self.treeviews[index].item(self.treeviews[index].selection()[0])['values']
         food,price = values[0],float(values[-1][1:])
         l = tk.Label(win, text=food)
         l.grid(row=0, column=0)
