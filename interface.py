@@ -96,8 +96,8 @@ class StartPage(tk.Frame):
         canvas = FigureCanvasTkAgg(f, self)
         canvas.draw()
         #canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
-"""
 
+"""
 class Today(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -244,20 +244,19 @@ class PageTwo(tk.Frame):
             button = ttk.Button(frame, text="Button")
             button.grid(row=i + 1, column=4, sticky="WENS")
             dummy_buttons.append(ttk.Button)
-
 """
         def _removeFromMenu():
 
         def _makeOrder():
 
         def _clear():
-"""
 
+"""
 class PageThree(tk.Frame):
 
     def __init__(self,parent,controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Page two", font=LARGE_FONT)
+        label = tk.Label(self, text="Page Three", font=LARGE_FONT)
         self.grid()
 
         for r in range(6):
@@ -275,12 +274,16 @@ class PageThree(tk.Frame):
         self.listbox.insert(4, "Table 4")
         self.listbox.insert(5, "Table 5")
         self.listbox.insert(6, "Table 6")
-        self.listbox.grid(row=1, column=0, rowspan=4, columnspan=2, sticky="WENS")
+        self.listbox.grid(row=1, column=0, rowspan=4, columnspan=3, sticky="WENS")
         self.listbox.focus()
         self.listbox.bind('<Double-1>', lambda event, frame=Frame1: self.menuPopUpWindow(event, frame))
 
-        menu_button = ttk.Button(Frame1,text="Menu",command = lambda x: x)
-        menu_button.grid(row=5,column = 0,columnspan = 2,sticky="WENS")
+        menu_button = ttk.Button(Frame1,text="Close Table",command = lambda: self.closeTable())
+        menu_button.grid(row=5,column = 0,columnspan = 3,sticky="WENS")
+
+    def closeTable(self):
+        table = self.selection_get() #TODO Adding total price and date to database
+        open("Files/"+table+".txt", 'w').close()
 
     def menuPopUpWindow(self,event,frame):
         win = tk.Toplevel()
@@ -316,7 +319,7 @@ class PageThree(tk.Frame):
         self.treeview.heading('price', text='Price')
 
         self.treeview.insert('', 'end', text="1", values=("French Fries", "$3"))
-        self.treeview.bind('<Double-1>',lambda x = tabel_no: self.amountPopUpWindow(event,x))
+        self.treeview.bind('<Double-1>',lambda x: self.amountPopUpWindow(event,table=tabel_no))
 
         # set frame resize priorities
         f1.rowconfigure(0, weight=1)
@@ -330,11 +333,19 @@ class PageThree(tk.Frame):
         win.wm_title("Amount")
         win.geometry("200x200+30+30")
         item = self.treeview.selection()[0]
-        l = tk.Label(win, text=self.treeview.item(item))
+        values = self.treeview.item(item)['values']
+        food,price = values[0],float(values[-1][1:])
+        l = tk.Label(win, text=food)
         l.grid(row=0, column=0)
 
-        l1 = tk.Label(win, text=table)
+        l1 = tk.Label(win, text=price)
         l1.grid(row=1, column=0)
+
+        file = open("Files/"+table+".txt","a")
+        file.write(food + " $"+str(price)+" $"+str(price*4)+"\n")
+
+        file.close()
+
 
         b = ttk.Button(win, text="Okay", command=win.destroy)
         b.grid(row=2, column=0)
