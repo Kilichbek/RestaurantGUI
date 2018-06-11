@@ -1,0 +1,39 @@
+Jalapeno Cream Cheese,$3.0,Starter
+Mozzarella Cheese Stick,$3.0,Starter
+Camembert Bite,$3.0,Starter
+Onion rings,$2.0,Starter
+Tandoori Mix,$3.5,Starter
+Fish Pakora,$2.9,Starter
+Spring roll,$1.95,Starter
+Steak,$17.5,Main Course
+Entrecote,$23.5,Main Course
+Cote a l'os,$27.5,Main Course
+Scampi Diablo,$18.5,Main Course
+Indian chicken curry,$14.0,Main Course
+Spaghetti Bolognese,$12.0,Main Course
+Spaghetti Chef,$14.0,Main Course
+Penne Ham & Cheese,$12.0,Main Course
+Wafu Salad,$8.95,Salad
+Salmon Pine Salad,$9.25,Salad
+Green Salad,$6.75,Salad
+Wakame Salad,$11.50,Salad
+Margherita,$5.70,Pizza
+Tropicana,$7.50,Pizza
+Doner Pizza,$6.50,Pizza
+Four Seasons,$5.5,Pizza
+Romano,$8.2,Pizza
+J&B,$6.0,Drink
+Poire William,$6.0,Drink
+Jagermeister,$3.5,Drink
+Courvoisier XO,$17.5,Drink
+Coffee,$2.0,Drink
+Green Tea,$2.0,Drink
+English Tea,$2.0,Drink
+Cappuccino,$2.5,Drink
+Coca Cola,$2.5,Drink
+Tequila Sunrise,$7.5,Drink
+Absolute Vodka,$5.5,Drink
+Joels Pavlova,$4.95,Dessert
+Banoffee Pie,$5.45,Dessert
+Chocolate Heaven,$5.45,Dessert
+Banana Boat,$4.95,Dessert
