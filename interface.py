@@ -6,7 +6,6 @@ Authors:
         Ulugbek Yusupov             Unknown         Computer Science & Engineering              Senior Developer
         Farrukh Yokubjanov          Unknown         Computer Science & Engineering              Junior Developer
         Bakhriddin                  Unknown         Business Administration                     Intern
-        Gulchiroy                   Unknown         Computer Science & Engineering              Intern
 
 Description: A program to help restaurant employees to manage and keep
             track of tables and orders from that tables, and calculate total
